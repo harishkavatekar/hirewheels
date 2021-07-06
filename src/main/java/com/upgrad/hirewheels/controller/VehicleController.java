@@ -44,4 +44,13 @@ public class VehicleController {
         }
         return new ResponseEntity(vehicleDTOList, HttpStatus.OK);
     }
+
+    @PutMapping(value = "/vehicles/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updateVehicle(@PathVariable(name = "id") int id, @RequestBody VehicleDTO vehicleDTO){
+        Vehicle vehicle = modelMapper.map(vehicleDTO, Vehicle.class);
+        Vehicle savedVehicle = adminService.changeAvailability(id, vehicle.getAvailabilityStatus());
+
+        VehicleDTO savedVehicleDTO = modelMapper.map(savedVehicle, VehicleDTO.class);
+        return new ResponseEntity(savedVehicleDTO, HttpStatus.ACCEPTED);
+    }
 }
