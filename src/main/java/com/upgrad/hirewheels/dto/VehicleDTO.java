@@ -1,5 +1,7 @@
 package com.upgrad.hirewheels.dto;
 
+import com.upgrad.hirewheels.entities.Vehicle;
+
 public class VehicleDTO {
     private int vehicleId;
 
@@ -20,6 +22,10 @@ public class VehicleDTO {
     private int availabilityStatus;
 
     private int pricePerDay;
+
+    public VehicleDTO(){
+        
+    }
 
     public VehicleDTO(int vehicleId, String vehicleModel, String vehicleNumber, int vehicleSubCategoryId, String color, int fuelTypeId, int locationId, String vehicleImageUrl, int availabilityStatus, int pricePerDay) {
         this.vehicleId = vehicleId;

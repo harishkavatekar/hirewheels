@@ -6,10 +6,9 @@ import com.upgrad.hirewheels.services.AdminService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +22,17 @@ public class VehicleController {
 
     @Autowired
     ModelMapper modelMapper;
+
+    @PostMapping(value = "/vehicles", consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity addVehicle(@RequestBody VehicleDTO vehicleDTO) throws Exception {
+        Vehicle vehicle = modelMapper.map(vehicleDTO, Vehicle.class);
+        Vehicle savedVehicle = adminService.registerVehicle(vehicle);
+
+        VehicleDTO savedVehicleDTO = modelMapper.map(savedVehicle, VehicleDTO.class);
+        return new ResponseEntity(savedVehicleDTO, HttpStatus.CREATED);
+
+    }
 
     @GetMapping(value = "/vehicles")
     public ResponseEntity getVehicles(VehicleDTO vehicleDTO) throws Exception {
