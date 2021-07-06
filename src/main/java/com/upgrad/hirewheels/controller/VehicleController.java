@@ -35,11 +35,13 @@ public class VehicleController {
     }
 
     @GetMapping(value = "/vehicles")
-    public ResponseEntity getVehicles(VehicleDTO vehicleDTO) throws Exception {
-        Vehicle vehicle = modelMapper.map(vehicleDTO, Vehicle.class);
-        Vehicle vehicleList = adminService.registerVehicle(vehicle);
+    public ResponseEntity getVehicles() throws Exception {
+        List<Vehicle> vehicleList = adminService.getVehicles();
+        List<VehicleDTO> vehicleDTOList = new ArrayList<>();
 
-        VehicleDTO vehicleDTOList = modelMapper.map(vehicleList, VehicleDTO.class);
+        for(Vehicle vehicle: vehicleList){
+            vehicleDTOList.add(modelMapper.map(vehicle, VehicleDTO.class));
+        }
         return new ResponseEntity(vehicleDTOList, HttpStatus.OK);
     }
 }
